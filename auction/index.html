@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>AuctionChain — Decentralised Auction Platform</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-brand">🔨 AuctionChain</div>
+        <div class="nav-right">
+            <span id="walletAddress" class="wallet-badge">Not Connected</span>
+            <button id="connectBtn" class="btn btn-outline" onclick="connectWallet()">Connect Wallet</button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1>Decentralised Auction Platform</h1>
+        <p>Place bids transparently on the Ethereum blockchain. Every bid is permanent and verifiable.</p>
+    </section>
+
+    <main class="container">
+
+        <!-- STATUS BAR -->
+        <div id="statusBar" class="status-bar hidden"></div>
+
+        <!-- ADMIN PANEL -->
+        <section id="adminPanel" class="card hidden">
+            <h2>🛡 Admin Panel — Create Auction</h2>
+            <div class="form-grid">
+                <input id="itemName" type="text" placeholder="Item Name (e.g. Vintage Watch)"/>
+                <textarea id="itemDesc" placeholder="Item Description" rows="3"></textarea>
+                <input id="startPrice" type="number" placeholder="Starting Price (ETH)" step="0.001" min="0.001"/>
+                <input id="duration" type="number" placeholder="Duration (minutes)" min="1"/>
+                <button class="btn btn-primary" onclick="createAuction()">🔨 Create Auction</button>
+            </div>
+        </section>
+
+        <!-- AUCTIONS -->
+        <section class="card">
+            <div class="section-header">
+                <h2>📦 Active & Past Auctions</h2>
+                <button class="btn btn-sm" onclick="loadAuctions()">🔄 Refresh</button>
+            </div>
+            <div id="auctionList" class="auction-grid">
+                <p class="muted">Connect your wallet to load auctions.</p>
+            </div>
+        </section>
+
+        <!-- BID SECTION -->
+        <section id="bidSection" class="card hidden">
+            <h2>💰 Place Bid on: <span id="bidItemName"></span></h2>
+            <div class="bid-info">
+                <div class="info-box">
+                    <span>Current Highest Bid</span>
+                    <strong id="currentHighest">—</strong>
+                </div>
+                <div class="info-box">
+                    <span>Highest Bidder</span>
+                    <strong id="currentBidder">—</strong>
+                </div>
+                <div class="info-box">
+                    <span>Time Remaining</span>
+                    <strong id="timeRemaining">—</strong>
+                </div>
+            </div>
+            <div class="form-grid" style="max-width:400px; margin-top:1rem">
+                <input id="bidAmount" type="number" placeholder="Your Bid (ETH)" step="0.001" min="0.001"/>
+                <div class="btn-row">
+                    <button class="btn btn-primary" onclick="placeBid()">Place Bid</button>
+                    <button class="btn btn-outline" onclick="closeBid()">Cancel</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- REFUND SECTION -->
+        <section class="card">
+            <div class="section-header">
+                <h2>💸 My Refunds</h2>
+                <button class="btn btn-sm" onclick="loadRefunds()">🔄 Check</button>
+            </div>
+            <div id="refundList"><p class="muted">Connect wallet to check refunds.</p></div>
+        </section>
+
+    </main>
+
+    <!-- END AUCTION MODAL -->
+    <div id="endModal" class="modal-overlay hidden">
+        <div class="modal">
+            <h3>End Auction</h3>
+            <p>Item: <strong id="endItemName"></strong></p>
+            <p>Winner: <strong id="endWinner"></strong></p>
+            <p>Winning Bid: <strong id="endBid"></strong> ETH</p>
+            <div class="btn-row">
+                <button class="btn btn-danger" onclick="endAuction()">Finalise Auction</button>
+                <button class="btn btn-outline" onclick="closeEndModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>AuctionChain &copy; 2025 — Powered by Ethereum Sepolia Testnet</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CharityChain – Donation Platform</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-brand">⛓ CharityChain</div>
+        <div class="nav-right">
+            <span id="walletAddress" class="wallet-badge">Not Connected</span>
+            <button id="connectBtn" class="btn btn-outline" onclick="connectWallet()">Connect Wallet</button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1>Transparent Charity Donations</h1>
+        <p>Every donation is recorded on the Ethereum blockchain — fully transparent, fully trustworthy.</p>
+    </section>
+
+    <main class="container">
+
+        <!-- STATUS BAR -->
+        <div id="statusBar" class="status-bar hidden"></div>
+
+        <!-- ADMIN PANEL -->
+        <section id="adminPanel" class="card hidden">
+            <h2>🛡 Admin Panel — Create Campaign</h2>
+            <div class="form-grid">
+                <input id="campTitle" type="text" placeholder="Campaign Title" />
+                <input id="campGoal" type="number" placeholder="Fundraising Goal (ETH)" step="0.01" min="0.01"/>
+                <textarea id="campDesc" placeholder="Campaign Description" rows="3"></textarea>
+                <button class="btn btn-primary" onclick="createCampaign()">Create Campaign</button>
+            </div>
+        </section>
+
+        <!-- CAMPAIGNS -->
+        <section class="card">
+            <div class="section-header">
+                <h2>📋 Active Campaigns</h2>
+                <button class="btn btn-sm" onclick="loadCampaigns()">🔄 Refresh</button>
+            </div>
+            <div id="campaignList" class="campaign-grid">
+                <p class="muted">Connect your wallet to load campaigns.</p>
+            </div>
+        </section>
+
+        <!-- DONATE MODAL INLINE -->
+        <section id="donateSection" class="card hidden">
+            <h2>💸 Donate to: <span id="donateCampTitle"></span></h2>
+            <div class="form-grid">
+                <input id="donateAmount" type="number" placeholder="Amount in ETH" step="0.001" min="0.001"/>
+                <div class="btn-row">
+                    <button class="btn btn-primary" onclick="donate()">Send Donation</button>
+                    <button class="btn btn-outline" onclick="closeDonate()">Cancel</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- MY HISTORY -->
+        <section class="card">
+            <div class="section-header">
+                <h2>📜 My Donation History</h2>
+                <button class="btn btn-sm" onclick="loadHistory()">🔄 Load</button>
+            </div>
+            <div id="historyList"><p class="muted">Connect wallet to view history.</p></div>
+        </section>
+
+        <!-- LEADERBOARD -->
+        <section class="card">
+            <div class="section-header">
+                <h2>🏆 Leaderboard</h2>
+            </div>
+            <div class="form-grid" style="max-width:400px">
+                <select id="leaderCampSelect">
+                    <option value="">-- Select Campaign --</option>
+                </select>
+                <button class="btn btn-sm" onclick="loadLeaderboard()">Show Leaderboard</button>
+            </div>
+            <div id="leaderboardList"></div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>CharityChain &copy; 2025 — Powered by Ethereum Sepolia Testnet</p>
+    </footer>
+
+    <!-- Withdraw Modal -->
+    <div id="withdrawModal" class="modal-overlay hidden">
+        <div class="modal">
+            <h3>Withdraw Funds</h3>
+            <p>Campaign: <strong id="withdrawCampName"></strong></p>
+            <p>Available: <strong id="withdrawAmount"></strong> ETH</p>
+            <div class="btn-row">
+                <button class="btn btn-danger" onclick="withdrawDonations()">Withdraw</button>
+                <button class="btn btn-outline" onclick="closeWithdraw()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
